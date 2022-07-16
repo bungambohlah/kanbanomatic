@@ -5,15 +5,23 @@ import CredentialsProvider from "next-auth/providers/credentials";
 // Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "../../../server/db/client";
+import { Provider } from "next-auth/providers";
+
+let githubProvider: Provider[] = [];
+if (process.env.GITHUB_ID && process.env.GITHUB_SECRET) {
+  githubProvider = [
+    GithubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+    }),
+  ];
+}
 
 export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
   providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-    }),
+    ...githubProvider,
     // ...add more providers here
     CredentialsProvider({
       name: "Credentials",
