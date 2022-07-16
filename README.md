@@ -17,7 +17,7 @@ This app also bootstrapped according to the [init.tips](https://init.tips) stack
 
 ## Link
 
-Coming soon...
+[kanbanomatic.afif.dev](https://kanbanomatic.afif.dev)
 
 ## About Me
 
