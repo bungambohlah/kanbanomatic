@@ -38,3 +38,6 @@ yarn-error.log*
 # kanbanomatic sqlite db file
 kanbanomatic.db
 kanbanomatic.db-journal
+
+# vercel env local file
+.vercel_env
