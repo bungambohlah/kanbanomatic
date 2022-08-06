@@ -34,3 +34,7 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# kanbanomatic sqlite db file
+kanbanomatic.db
+kanbanomatic.db-journal
