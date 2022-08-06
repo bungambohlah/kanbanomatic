@@ -1,5 +1,7 @@
 # Kanbanomatic
 
+[![GitHub Actions Vercel Production Deployment](https://github.com/bungambohlah/kanbanomatic/actions/workflows/vercel_production.yaml/badge.svg)](https://github.com/bungambohlah/kanbanomatic/actions/workflows/vercel_production.yaml)
+
 This is an app that helps you to manage your kanban board.
 
 ## Table of Contents
