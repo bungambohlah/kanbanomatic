@@ -13,8 +13,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install Vercel CLI
         run: npm install --global vercel@canary
-      - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }} .env
+      - name: Pull Vercel Environment Information For Build
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Pull Vercel Environment Information For Configuration
+        run: vercel env pull --environment=production --token=${{ secrets.VERCEL_TOKEN }} .env
       - name: Presto Migrate
         run: npx prisma migrate dev
       - name: Build Project Artifacts
