@@ -17,8 +17,8 @@ jobs:
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
       - name: Pull Vercel Environment Information For Configuration
         run: vercel env pull --environment=production --token=${{ secrets.VERCEL_TOKEN }} .env
-      - name: Presto Migrate
-        run: npx prisma migrate dev
+      - name: Presto DB Push
+        run: npx prisma db push
       - name: Build Project Artifacts
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy Project Artifacts to Vercel
