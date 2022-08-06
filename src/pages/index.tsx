@@ -7,7 +7,7 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col justify-center items-center w-full">
+      <div className="flex flex-col items-center justify-center w-full">
         <div className="pt-6 text-2xl text-gray-700 dark:text-slate-300">
           {hello.data ? <p>{hello.data.greeting}</p> : <p>Loading..</p>}
         </div>

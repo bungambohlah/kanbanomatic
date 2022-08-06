@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Logo from "../components/Logo";
 import { useTheme } from "next-themes";
 import { SunIcon, MoonIcon } from "@heroicons/react/solid";
+import LoginButton from "../components/LoginButton";
 
 const Header: React.FC<{}> = () => {
   const { systemTheme, theme, setTheme } = useTheme();
@@ -36,11 +37,14 @@ const Header: React.FC<{}> = () => {
   };
 
   return (
-    <header className="h-15 w-full shadow-sm dark:border-gray-700">
-      <div className="container px-4 sm:px-6 py-4 flex justify-between items-center">
+    <header className="w-full shadow-sm h-15 dark:border-gray-700">
+      <div className="container flex items-center justify-between px-4 py-4 sm:px-6">
         {/* Logo */}
         <Logo />
-        <RenderButtonThemeChanger />
+        <div className="flex items-center gap-4 flex-end">
+          <LoginButton />
+          <RenderButtonThemeChanger />
+        </div>
       </div>
     </header>
   );
