@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate && prisma migrate dev",
+    "postinstall": "prisma generate && prisma db pull",
     "prepare": "husky install"
   },
   "dependencies": {
