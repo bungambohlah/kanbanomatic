@@ -20,7 +20,6 @@ export default function LoginButton(): JSX.Element {
   }
   return (
     <>
-      Not signed in <br />
       <button
         className='text-white bg-purple-600 btn btm-nav-sm hover:bg-purple-700'
         onClick={() => {
