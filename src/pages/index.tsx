@@ -3,6 +3,9 @@ import Layout from '../sections/Layout';
 import { trpc } from '../utils/trpc';
 import useZustandStore from '../state/zustand';
 import LoginButton from '../components/LoginButton';
+import Spinner from '../components/Spinner';
+import Button from '../components/Button';
+import Input from '../components/Input';
 
 const Home: NextPage = () => {
   const { createNewList, setCreateNewList } = useZustandStore();
@@ -19,14 +22,12 @@ const Home: NextPage = () => {
     <Layout>
       <div className='flex flex-col items-center justify-center w-full'>
         {isLoading ? (
-          <div className='pt-6 text-lg text-gray-700 dark:text-slate-300'>
-            Loading...
-          </div>
+          <Spinner />
         ) : (
           <>
             {isError && error.message === 'UNAUTHORIZED' ? (
-              <div className='flex flex-col flex-auto space-y-4'>
-                <div className='pt-6 text-2xl text-gray-700 dark:text-slate-300'>
+              <div className='flex flex-col items-center space-y-4 w-sm'>
+                <div className='w-full pt-6 text-2xl text-gray-700 dark:text-slate-300'>
                   Start Create your first kanban board, but You need to login
                   first.
                 </div>
@@ -39,13 +40,13 @@ const Home: NextPage = () => {
                     Start Create your first kanban board
                   </div>
                 )}
-                <div className='pt-6 text-2xl text-gray-700 dark:text-slate-300'>
+                <div className='flex flex-col items-center max-w-md space-y-4'>
                   {!createNewList && (
-                    <div
-                      className='btn mix-blend-darken dark:mix-blend-lighten'
+                    <Button
+                      className='rounded-lg bg-gradient-to-r from-fuchsia-500 via-fuchsia-600 to-fuchsia-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gradient-to-br focus:outline-none focus:ring-4 focus:ring-fuchsia-300 dark:focus:ring-fuchsia-800'
                       onClick={() => setCreateNewList(!createNewList)}>
                       Create a new List
-                    </div>
+                    </Button>
                   )}
                   <div className='flex flex-col flex-auto space-y-4'>
                     {createNewList && (
@@ -62,22 +63,34 @@ const Home: NextPage = () => {
                               // create new list
                               listMutation.mutate(
                                 { name },
-                                { onSuccess: () => refetch() },
+                                {
+                                  onSuccess: async () => {
+                                    await refetch();
+                                    setCreateNewList(false);
+                                    form.reset();
+                                  },
+                                },
                               );
                             }
                           }
                         }}>
-                        <input
+                        <Input
+                          id='input_name'
                           name='name'
                           type='text'
                           placeholder='Input your list name'
-                          className='w-full max-w-xs ered input-secondary'
                         />
-                        <input
+                        <Button
                           type='submit'
-                          value='Submit'
-                          className='btn btn-info mix-blend-darken dark:mix-blend-lighten'
-                        />
+                          className='rounded-lg bg-gradient-to-r from-fuchsia-400 via-fuchsia-500 to-fuchsia-600 px-5 py-2.5 text-center text-sm font-medium text-white shadow-lg shadow-fuchsia-500/50 hover:bg-gradient-to-br focus:outline-none focus:ring-4 focus:ring-fuchsia-300 dark:shadow-lg dark:shadow-fuchsia-800/80 dark:focus:ring-fuchsia-800'>
+                          {listMutation.isLoading ? (
+                            <>
+                              <Spinner /> Loading...
+                            </>
+                          ) : (
+                            'Submit'
+                          )}
+                        </Button>
                       </form>
                     )}
                     {data?.lists && (
