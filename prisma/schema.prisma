@@ -11,13 +11,9 @@ datasource db {
     shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
-model Example {
-    id String @id @default(cuid())
-}
-
 // Necessary for Next auth
 model Account {
-    id                String  @id @default(cuid())
+    id                String   @id @default(cuid())
     userId            String
     type              String
     provider          String
@@ -29,9 +25,23 @@ model Account {
     scope             String?
     id_token          String?
     session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    createdAt         DateTime @default(now())
+    updatedAt         DateTime @default(now()) @updatedAt
 
     @@unique([provider, providerAccountId])
+    @@index(userId)
+    @@index(type)
+    @@index(provider)
+    @@index(providerAccountId)
+    @@index(refresh_token)
+    @@index(access_token)
+    @@index(expires_at)
+    @@index(token_type)
+    @@index(scope)
+    @@index(id_token)
+    @@index(createdAt)
+    @@index(updatedAt)
 }
 
 model Session {
@@ -40,6 +50,14 @@ model Session {
     userId       String
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @default(now()) @updatedAt
+
+    @@index(sessionToken)
+    @@index(userId)
+    @@index(expires)
+    @@index(createdAt)
+    @@index(updatedAt)
 }
 
 model User {
@@ -50,12 +68,44 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    lists         List[]
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime  @default(now()) @updatedAt
+
+    @@index(name)
+    @@index(email)
+    @@index(emailVerified)
+    @@index(image)
+    @@index(createdAt)
+    @@index(updatedAt)
 }
 
 model VerificationToken {
     identifier String
     token      String   @unique
     expires    DateTime
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @default(now()) @updatedAt
 
     @@unique([identifier, token])
+    @@index(identifier)
+    @@index(token)
+    @@index(expires)
+    @@index(createdAt)
+    @@index(updatedAt)
+}
+
+model List {
+    id        String   @id @default(cuid())
+    name      String
+    userId    String
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
+
+    @@unique([name, userId])
+    @@index(name)
+    @@index(userId)
+    @@index(createdAt)
+    @@index(updatedAt)
 }
