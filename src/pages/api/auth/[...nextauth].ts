@@ -29,6 +29,13 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.TWITTER_SECRET || '',
     }),
   ],
+  callbacks: {
+    session({ session, user }) {
+      // Send properties to the client, like an access_token from a provider.
+      session.user.id = user.id;
+      return session;
+    },
+  },
 };
 
 export default NextAuth(authOptions);
