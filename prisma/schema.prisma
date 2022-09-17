@@ -21,7 +21,7 @@ model Account {
     provider          String
     providerAccountId String
     refresh_token     String?
-    access_token      String?
+    access_token      String?  @db.Text
     expires_at        Int?
     token_type        String?
     scope             String?
@@ -37,7 +37,6 @@ model Account {
     @@index(provider)
     @@index(providerAccountId)
     @@index(refresh_token)
-    @@index(access_token)
     @@index(expires_at)
     @@index(token_type)
     @@index(scope)
